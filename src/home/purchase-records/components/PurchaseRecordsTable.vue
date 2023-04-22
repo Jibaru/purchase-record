@@ -80,7 +80,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.load(1)
+    this.load(1, 100)
   }
 })
 </script>

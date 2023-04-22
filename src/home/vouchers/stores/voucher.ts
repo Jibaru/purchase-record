@@ -41,6 +41,8 @@ export const useVoucherStore = defineStore('voucher', () => {
         }
       }[] = data.data
 
+      vouchers.value = []
+
       for (const voucher of responseVouchers) {
         vouchers.value.push({
           id: voucher.id,

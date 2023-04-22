@@ -49,6 +49,8 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
         third_igv_amount: number | null
       }[] = data.data
 
+      purchaseRecords.value = []
+
       for (const record of responsePurchaseRecords) {
         purchaseRecords.value.push({
           id: record.id,
