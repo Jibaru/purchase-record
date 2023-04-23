@@ -6,6 +6,7 @@ import type { PurchaseRecordDTO } from './dtos/purchase-record'
 
 export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
   const purchaseRecords: Ref<PurchaseRecordDTO[]> = ref([])
+  let totalPages: Ref<number> = ref(0)
   let isLoadingPurchaseRecords: Ref<boolean> = ref(false)
 
   const axios = new Axios({
@@ -49,6 +50,7 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
         third_igv_amount: number | null
       }[] = data.data
 
+      totalPages.value = data.total_pages
       purchaseRecords.value = []
 
       for (const record of responsePurchaseRecords) {
@@ -85,6 +87,7 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
   return {
     load,
     purchaseRecords,
+    totalPages,
     isLoadingPurchaseRecords
   }
 })

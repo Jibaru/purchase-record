@@ -54,6 +54,11 @@
         </tr>
       </tbody>
     </base-table>
+    <base-pagination
+      :current-page="currentPage"
+      :total-pages="totalPages"
+      @select-page="selectPage"
+    />
   </base-card>
   <base-alert v-else>Cargando registro de compras...</base-alert>
 </template>
@@ -64,10 +69,16 @@ import { usePurchaseRecordStore } from '../stores/purchase-record'
 
 export default defineComponent({
   data() {
-    return {}
+    return {
+      currentPage: 1
+    }
   },
   computed: {
-    ...mapState(usePurchaseRecordStore, ['purchaseRecords', 'isLoadingPurchaseRecords'])
+    ...mapState(usePurchaseRecordStore, [
+      'purchaseRecords',
+      'totalPages',
+      'isLoadingPurchaseRecords'
+    ])
   },
   methods: {
     ...mapActions(usePurchaseRecordStore, ['load']),
@@ -77,10 +88,18 @@ export default defineComponent({
       } else {
         return num.toFixed(2)
       }
+    },
+    selectPage(page: number): void {
+      this.currentPage = page
+    }
+  },
+  watch: {
+    currentPage(newVal: number): void {
+      this.load(newVal)
     }
   },
   mounted() {
-    this.load(1, 100)
+    this.load(this.currentPage)
   }
 })
 </script>

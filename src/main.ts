@@ -13,6 +13,7 @@ import BaseCard from './shared/components/base-card.vue'
 import BaseFileInput from './shared/components/base-file-input.vue'
 import BaseInput from './shared/components/base-input.vue'
 import BaseLabel from './shared/components/base-label.vue'
+import BasePagination from './shared/components/base-pagination.vue'
 import BaseTable from './shared/components/base-table.vue'
 import BaseTitle from './shared/components/base-title.vue'
 
@@ -28,6 +29,7 @@ app.component('base-card', BaseCard)
 app.component('base-file-input', BaseFileInput)
 app.component('base-input', BaseInput)
 app.component('base-label', BaseLabel)
+app.component('base-pagination', BasePagination)
 app.component('base-table', BaseTable)
 app.component('base-title', BaseTitle)
 

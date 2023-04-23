@@ -7,6 +7,7 @@ import { format } from '@/shared/utils/dates/formatter'
 
 export const useVoucherStore = defineStore('voucher', () => {
   const vouchers: Ref<Voucher[]> = ref([])
+  let totalPages: Ref<number> = ref(0)
   let isCreatingVouchers: Ref<boolean> = ref(false)
   let isLoadingVouchers: Ref<boolean> = ref(false)
 
@@ -40,6 +41,7 @@ export const useVoucherStore = defineStore('voucher', () => {
           amount: number
         }
       }[] = data.data
+      totalPages.value = data.total_pages
 
       vouchers.value = []
 
@@ -84,6 +86,7 @@ export const useVoucherStore = defineStore('voucher', () => {
     load,
     create,
     vouchers,
+    totalPages,
     isLoadingVouchers,
     isCreatingVouchers
   }
