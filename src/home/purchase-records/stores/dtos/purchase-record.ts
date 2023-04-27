@@ -19,4 +19,7 @@ export interface PurchaseRecordDTO {
   secondIgvAmount: number | null
   thirdTaxBase: number | null
   thirdIgvAmount: number | null
+  payableAmount: number
+  hasDetraction: boolean
+  detractionPercentage: number | null
 }

@@ -14,10 +14,8 @@
         <th>Denominación Proveedor</th>
         <th>Gravado (A)</th>
         <th>IGV (A)</th>
-        <th>Gravado (B)</th>
-        <th>IGV (B)</th>
-        <th>Gravado (C)</th>
-        <th>IGV (C)</th>
+        <th>Total</th>
+        <th>Detracción</th>
       </thead>
       <tbody>
         <tr v-for="record in purchaseRecords" :key="record.id">
@@ -47,10 +45,14 @@
           <td>{{ record.supplierDocumentDenomination }}</td>
           <td>{{ numberFormat(record.firstTaxBase) }}</td>
           <td>{{ numberFormat(record.firstIgvAmount) }}</td>
-          <td>{{ numberFormat(record.secondTaxBase) }}</td>
-          <td>{{ numberFormat(record.secondIgvAmount) }}</td>
-          <td>{{ numberFormat(record.thirdTaxBase) }}</td>
-          <td>{{ numberFormat(record.thirdIgvAmount) }}</td>
+          <td>
+            <base-badge>{{ numberFormat(record.payableAmount) }}</base-badge>
+          </td>
+          <td>
+            {{
+              record.hasDetraction ? `SI ${percentageFormat(record.detractionPercentage)}` : 'NO'
+            }}
+          </td>
         </tr>
       </tbody>
     </base-table>
@@ -88,6 +90,13 @@ export default defineComponent({
       } else {
         return num.toFixed(2)
       }
+    },
+    percentageFormat(num: number | null): string {
+      if (num === null) {
+        return '- %'
+      }
+
+      return `${num} %`
     },
     selectPage(page: number): void {
       this.currentPage = page

@@ -48,6 +48,9 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
         second_igv_amount: number | null
         third_tax_base: number | null
         third_igv_amount: number | null
+        payable_amount: number
+        has_detraction: boolean
+        detraction_percentage: number | null
       }[] = data.data
 
       totalPages.value = data.total_pages
@@ -74,7 +77,10 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
           secondTaxBase: record.second_tax_base,
           secondIgvAmount: record.second_igv_amount,
           thirdTaxBase: record.third_tax_base,
-          thirdIgvAmount: record.third_igv_amount
+          thirdIgvAmount: record.third_igv_amount,
+          payableAmount: record.payable_amount,
+          hasDetraction: record.has_detraction,
+          detractionPercentage: record.detraction_percentage
         })
       }
     } catch (error) {
