@@ -7,8 +7,10 @@ import { format } from '@/shared/utils/dates/formatter'
 
 export const useVoucherStore = defineStore('voucher', () => {
   const vouchers: Ref<Voucher[]> = ref([])
+  const voucher: Ref<DetailedVoucher | null> = ref(null)
   let totalPages: Ref<number> = ref(0)
   let isCreatingVouchers: Ref<boolean> = ref(false)
+  let isLoadingVoucher: Ref<boolean> = ref(false)
   let isLoadingVouchers: Ref<boolean> = ref(false)
 
   const axios = new Axios({
@@ -63,6 +65,20 @@ export const useVoucherStore = defineStore('voucher', () => {
     }
   }
 
+  async function loadSingle(voucherId: string): Promise<void> {
+    isLoadingVoucher.value = true
+    voucher.value = null
+    try {
+      const { data } = await axios.get(VOUCHERS + '/' + voucherId)
+
+      voucher.value = data.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      isLoadingVoucher.value = false
+    }
+  }
+
   async function create(files: File[]) {
     isCreatingVouchers.value = true
     try {
@@ -84,7 +100,9 @@ export const useVoucherStore = defineStore('voucher', () => {
 
   return {
     load,
+    loadSingle,
     create,
+    voucher,
     vouchers,
     totalPages,
     isLoadingVouchers,

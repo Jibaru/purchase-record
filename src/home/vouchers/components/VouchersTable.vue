@@ -7,6 +7,7 @@
         <th>Emisor</th>
         <th>Receptor</th>
         <th>Monto total</th>
+        <th>Más</th>
       </thead>
       <tbody>
         <tr v-for="voucher in vouchers" :key="voucher.id">
@@ -20,6 +21,9 @@
           <td>{{ voucher.supplier }}</td>
           <td>
             <b>{{ voucher.total }}</b>
+          </td>
+          <td>
+            <base-button @click="goToDetailed(voucher.id)">Ver más</base-button>
           </td>
         </tr>
       </tbody>
@@ -50,6 +54,14 @@ export default defineComponent({
     ...mapActions(useVoucherStore, ['load']),
     selectPage(page: number): void {
       this.currentPage = page
+    },
+    goToDetailed(id: string): void {
+      this.$router.push({
+        name: 'voucher',
+        params: {
+          id: id
+        }
+      })
     }
   },
   watch: {
