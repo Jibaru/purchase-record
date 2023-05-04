@@ -4,6 +4,7 @@ import { BASE_URL, INVOICES, VOUCHERS } from '@/config/api'
 import { Axios } from 'axios'
 import type { Voucher } from './dtos/voucher'
 import { format } from '@/shared/utils/dates/formatter'
+import type { DetailedVoucher } from './dtos/detailed-voucher'
 
 export const useVoucherStore = defineStore('voucher', () => {
   const vouchers: Ref<Voucher[]> = ref([])

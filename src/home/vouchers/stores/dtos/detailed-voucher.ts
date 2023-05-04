@@ -1,4 +1,4 @@
-interface DetailedVoucher {
+export interface DetailedVoucher {
   id: number
   series_number: string
   issue_date: string
@@ -26,6 +26,7 @@ interface DetailedVoucher {
     quantity: number
     unit: string
     unit_value: number
+    total: number
     description?: string
   }[]
   summary: {

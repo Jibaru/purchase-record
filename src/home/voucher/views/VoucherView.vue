@@ -62,7 +62,7 @@
             <td>{{ line.unit }}</td>
             <td>{{ line.description }}</td>
             <td>{{ numberFormat(line.unit_value) }}</td>
-            <td>{{ numberFormat(line.unit_value) }}</td>
+            <td>{{ numberFormat(line.total) }}</td>
           </tr>
         </tbody>
       </base-table>
