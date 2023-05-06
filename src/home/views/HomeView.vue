@@ -11,6 +11,8 @@
 import { defineComponent } from 'vue'
 import HomeMenu from '@/home/components/HomeMenu.vue'
 import HomeNav from '../components/HomeNav.vue'
+import { mapState } from 'pinia'
+import { useAuthStore } from '@/auth/stores/auth'
 
 export default defineComponent({
   components: {
@@ -22,12 +24,22 @@ export default defineComponent({
       menuOpened: false
     }
   },
+  computed: {
+    ...mapState(useAuthStore, ['isAuthenticated'])
+  },
   methods: {
     openMenu(): void {
       this.menuOpened = true
     },
     closeMenu(): void {
       this.menuOpened = false
+    }
+  },
+  mounted(): void {
+    if (!this.isAuthenticated) {
+      this.$router.replace({
+        name: 'login'
+      })
     }
   }
 })

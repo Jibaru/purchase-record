@@ -3,16 +3,20 @@ import { defineStore } from 'pinia'
 import { BASE_URL, INVOICES, PURCHASE_RECORDS, VOUCHERS } from '@/config/api'
 import { Axios } from 'axios'
 import type { PurchaseRecordDTO } from './dtos/purchase-record'
+import { useAuthStore } from '@/auth/stores/auth'
 
 export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
   const purchaseRecords: Ref<PurchaseRecordDTO[]> = ref([])
   let totalPages: Ref<number> = ref(0)
   let isLoadingPurchaseRecords: Ref<boolean> = ref(false)
 
+  const { token } = useAuthStore()
+
   const axios = new Axios({
     baseURL: BASE_URL,
     headers: {
-      Accept: 'application/json'
+      Accept: 'application/json',
+      Authorization: token
     },
     transformResponse: (data: string) => JSON.parse(data)
   })

@@ -1,9 +1,31 @@
 <template>
-  <input />
+  <input :value="inputValue" @input="changeModelValue" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-export default defineComponent({})
+export default defineComponent({
+  emits: ['update:modelValue'],
+  props: {
+    modelValue: {
+      type: String,
+      required: false,
+      default: null
+    }
+  },
+  data() {
+    return {
+      inputValue: null as string | null
+    }
+  },
+  methods: {
+    changeModelValue(event: Event): void {
+      if ((event.target as HTMLInputElement).value) {
+        this.inputValue = (event.target as HTMLInputElement).value
+        this.$emit('update:modelValue', (event.target as HTMLInputElement).value)
+      }
+    }
+  }
+})
 </script>
 <style lang="css" scoped>
 input {

@@ -4,11 +4,13 @@
       <li @click="menuClicked">
         <a href="#"><font-awesome-icon icon="fa-bars" /> Menú</a>
       </li>
-      <li>Salir</li>
+      <li @click="logOut" class="logout">Salir</li>
     </ul>
   </nav>
 </template>
 <script lang="ts">
+import { useAuthStore } from '@/auth/stores/auth'
+import { mapActions } from 'pinia'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -17,6 +19,7 @@ export default defineComponent({
     return {}
   },
   methods: {
+    ...mapActions(useAuthStore, ['logOut']),
     menuClicked(): void {
       this.$emit('menu-click')
     }
@@ -47,5 +50,9 @@ li {
   display: block;
   margin: 0;
   padding: 0;
+}
+
+.logout {
+  cursor: pointer;
 }
 </style>

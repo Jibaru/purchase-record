@@ -5,6 +5,7 @@ import { Axios } from 'axios'
 import type { Voucher } from './dtos/voucher'
 import { format } from '@/shared/utils/dates/formatter'
 import type { DetailedVoucher } from './dtos/detailed-voucher'
+import { useAuthStore } from '@/auth/stores/auth'
 
 export const useVoucherStore = defineStore('voucher', () => {
   const vouchers: Ref<Voucher[]> = ref([])
@@ -14,10 +15,13 @@ export const useVoucherStore = defineStore('voucher', () => {
   let isLoadingVoucher: Ref<boolean> = ref(false)
   let isLoadingVouchers: Ref<boolean> = ref(false)
 
+  const { token } = useAuthStore()
+
   const axios = new Axios({
     baseURL: BASE_URL,
     headers: {
-      Accept: 'application/json'
+      Accept: 'application/json',
+      Authorization: token
     },
     transformResponse: (data: string) => JSON.parse(data)
   })
