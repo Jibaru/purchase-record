@@ -20,14 +20,15 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   function storeToStorage() {
-    localStorage.setItem(
-      'auth',
-      JSON.stringify({
-        token: token.value,
-        isAuthenticated: isAuthenticated.value,
-        user: user.value
-      })
-    )
+    const data = {
+      token: token.value,
+      isAuthenticated: isAuthenticated.value,
+      user: user.value
+    }
+
+    console.log(data)
+
+    localStorage.setItem('auth', JSON.stringify(data))
   }
 
   function loadFromStorage() {
@@ -73,8 +74,10 @@ export const useAuthStore = defineStore('auth', () => {
 
       if (response.status == 200) {
         if (response.data.data) {
-          token.value = response.data.data
+          const data: { token: string; subject: string; name: string } = response.data.data
+          token.value = data.token
           isAuthenticated.value = true
+          user.value = { id: data.subject, name: data.name }
           storeToStorage()
         }
       } else {
