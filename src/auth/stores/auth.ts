@@ -3,10 +3,12 @@ import { defineStore } from 'pinia'
 import type { User } from './dtos/user'
 import { BASE_URL, LOGIN, USERS } from '@/config/api'
 import { Axios } from 'axios'
+import type { Permission } from './dtos/permission'
 
 export const useAuthStore = defineStore('auth', () => {
   const token: Ref<string | null> = ref(null)
   const user: Ref<User | null> = ref(null)
+  const permissions: Ref<Permission[]> = ref([])
   const isLogIn: Ref<boolean> = ref(false)
   const isAuthenticated: Ref<boolean> = ref(false)
   const logInErrorMessage: Ref<string | null> = ref(null)
@@ -23,10 +25,9 @@ export const useAuthStore = defineStore('auth', () => {
     const data = {
       token: token.value,
       isAuthenticated: isAuthenticated.value,
-      user: user.value
+      user: user.value,
+      permissions: permissions.value
     }
-
-    console.log(data)
 
     localStorage.setItem('auth', JSON.stringify(data))
   }
@@ -39,11 +40,13 @@ export const useAuthStore = defineStore('auth', () => {
         token: string | null
         isAuthenticated: boolean
         user: User | null
+        permissions: Permission[]
       } = JSON.parse(data)
 
       token.value = stored.token
       isAuthenticated.value = stored.isAuthenticated
       user.value = stored.user
+      permissions.value = stored.permissions
     }
   }
 
@@ -74,10 +77,16 @@ export const useAuthStore = defineStore('auth', () => {
 
       if (response.status == 200) {
         if (response.data.data) {
-          const data: { token: string; subject: string; name: string } = response.data.data
+          const data: {
+            token: string
+            subject: string
+            name: string
+            permissions: { name: string }[]
+          } = response.data.data
           token.value = data.token
           isAuthenticated.value = true
           user.value = { id: data.subject, name: data.name }
+          permissions.value = data.permissions
           storeToStorage()
         }
       } else {
@@ -100,6 +109,35 @@ export const useAuthStore = defineStore('auth', () => {
     clearStorage()
   }
 
+  function canManageUsers(): boolean {
+    return (
+      permissions.value.find((permission: Permission) => permission.name === 'manage-users') !==
+      undefined
+    )
+  }
+
+  function canManageVouchers(): boolean {
+    return (
+      permissions.value.find((permission: Permission) => permission.name === 'manage-vouchers') !==
+      undefined
+    )
+  }
+
+  function canManagePurchaseRecords(): boolean {
+    return (
+      permissions.value.find(
+        (permission: Permission) => permission.name === 'manage-purchase-records'
+      ) !== undefined
+    )
+  }
+
+  function canManageInventory(): boolean {
+    return (
+      permissions.value.find((permission: Permission) => permission.name === 'manage-inventory') !==
+      undefined
+    )
+  }
+
   return {
     token,
     isLogIn,
@@ -107,6 +145,10 @@ export const useAuthStore = defineStore('auth', () => {
     logInErrorMessage,
     logInFromPersistence,
     logIn,
-    logOut
+    logOut,
+    canManageUsers,
+    canManageVouchers,
+    canManagePurchaseRecords,
+    canManageInventory
   }
 })
