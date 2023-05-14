@@ -8,12 +8,17 @@
             <font-awesome-icon icon="fa-house" /> Home
           </router-link>
         </li>
-        <li>
+        <li v-if="canManageUsers()">
+          <router-link to="users" @click="overlayClicked">
+            <font-awesome-icon icon="fa-file-invoice" /> Usuarios
+          </router-link>
+        </li>
+        <li v-if="canManageVouchers()">
           <router-link to="vouchers" @click="overlayClicked">
             <font-awesome-icon icon="fa-file-invoice" /> Comprobantes
           </router-link>
         </li>
-        <li>
+        <li v-if="canManagePurchaseRecords()">
           <router-link to="purchase-records" @click="overlayClicked">
             <font-awesome-icon icon="fa-file-invoice" /> Registro de compras
           </router-link>
@@ -24,6 +29,8 @@
   <div id="overlay" @click="overlayClicked"></div>
 </template>
 <script lang="ts">
+import { useAuthStore } from '@/auth/stores/auth'
+import { mapActions } from 'pinia'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -32,6 +39,12 @@ export default defineComponent({
     return {}
   },
   methods: {
+    ...mapActions(useAuthStore, [
+      'canManageUsers',
+      'canManageInventory',
+      'canManagePurchaseRecords',
+      'canManageVouchers'
+    ]),
     overlayClicked(): void {
       this.$emit('overlay-click')
     }

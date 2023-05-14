@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../auth/views/LoginView.vue'
 import HomeView from '../home/views/HomeView.vue'
 import PurchaseRecordsView from '../home/purchase-records/views/PurchaseRecordsView.vue'
+import UsersView from '../home/users/views/UsersView.vue'
 import VouchersView from '../home/vouchers/views/VouchersView.vue'
 import VoucherView from '../home/voucher/views/VoucherView.vue'
 
@@ -18,6 +19,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       children: [
+        {
+          path: 'users',
+          name: 'users',
+          component: UsersView
+        },
         {
           path: 'vouchers',
           name: 'vouchers',
