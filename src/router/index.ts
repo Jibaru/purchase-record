@@ -7,7 +7,7 @@ import VouchersView from '../home/vouchers/views/VouchersView.vue'
 import VoucherView from '../home/voucher/views/VoucherView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/login',

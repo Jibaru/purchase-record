@@ -1,6 +1,6 @@
 <template>
   <div v-if="voucher !== null">
-    <base-title>FACTURA ELECTRÓNICA</base-title>
+    <base-title>{{ voucher.series_number.includes('F') ? 'FACTURA ELECTRÓNICA' : 'RECIBO POR HONORARIOS' }}</base-title>
     <section id="seller">
       <base-card>
         <base-paragraph>

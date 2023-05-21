@@ -16,9 +16,11 @@ export default defineComponent({
   watch: {
     isAuthenticated(ok: boolean): void {
       if (ok) {
-        this.$router.replace({
-          name: 'home'
-        })
+        if (this.$route.path === '/login') {
+          this.$router.replace({
+            name: 'home'
+          })
+        }
       } else {
         this.$router.replace({
           name: 'login'

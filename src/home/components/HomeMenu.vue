@@ -3,26 +3,26 @@
     <aside>
       <base-title id="title">Registro de compras</base-title>
       <ul>
-        <li>
-          <router-link to="/" @click="overlayClicked">
-            <font-awesome-icon icon="fa-house" /> Home
-          </router-link>
-        </li>
-        <li v-if="canManageUsers()">
-          <router-link to="users" @click="overlayClicked">
-            <font-awesome-icon icon="fa-file-invoice" /> Usuarios
-          </router-link>
-        </li>
-        <li v-if="canManageVouchers()">
-          <router-link to="vouchers" @click="overlayClicked">
-            <font-awesome-icon icon="fa-file-invoice" /> Comprobantes
-          </router-link>
-        </li>
-        <li v-if="canManagePurchaseRecords()">
-          <router-link to="purchase-records" @click="overlayClicked">
-            <font-awesome-icon icon="fa-file-invoice" /> Registro de compras
-          </router-link>
-        </li>
+        <router-link to="/" @click="overlayClicked">
+          <li>
+              <font-awesome-icon icon="fa-house" /> Home
+          </li>
+        </router-link>
+        <router-link to="/users" @click="overlayClicked">
+          <li v-if="canManageUsers()">
+              <font-awesome-icon icon="fa-file-invoice" /> Usuarios
+          </li>
+        </router-link>
+        <router-link to="/vouchers" @click="overlayClicked">
+          <li v-if="canManageVouchers()">
+              <font-awesome-icon icon="fa-file-invoice" /> Comprobantes
+          </li>
+        </router-link>
+        <router-link to="/purchase-records" @click="overlayClicked">
+          <li v-if="canManagePurchaseRecords()">
+              <font-awesome-icon icon="fa-file-invoice" /> Registro de compras
+          </li>
+        </router-link>
       </ul>
     </aside>
   </Transition>
@@ -131,5 +131,9 @@ li:hover {
 .slide-fade-enter-from,
 .slide-fade-leave-to {
   transform: translateX(0%);
+}
+
+a {
+  width: 100%;
 }
 </style>
