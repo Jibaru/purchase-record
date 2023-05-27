@@ -27,4 +27,10 @@ button {
   font-size: 0.9375rem;
   border-radius: 0.375rem;
 }
+
+button:disabled {
+  background-color: #8d8d8f;
+  border-color: #8d8d8f;
+  cursor: not-allowed;
+}
 </style>
