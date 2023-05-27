@@ -1,5 +1,9 @@
 <template>
   <base-card v-if="!isLoadingPurchaseRecords">
+    <div>
+      <base-alert v-if="isLoadingPurchaseRecordsExportable">Descargando...</base-alert>
+      <base-button v-else @click="exportAll">Descargar</base-button>
+    </div>
     <base-table>
       <thead>
         <th>Periodo</th>
@@ -31,7 +35,14 @@
             <base-badge color="success">{{ record.issueDate }}</base-badge>
           </td>
           <td>{{ record.dueDate ?? '-' }}</td>
-          <td>{{ record.voucherType }} <base-badge>{{ record.voucherSeries.includes('F') || (record.firstIgvAmount ?? 0) > 0 ? 'FACTURA' : 'REC. POR HONORARIOS' }}</base-badge></td>
+          <td>
+            {{ record.voucherType }}
+            <base-badge>{{
+              record.voucherSeries.includes('F') || (record.firstIgvAmount ?? 0) > 0
+                ? 'FACTURA'
+                : 'REC. POR HONORARIOS'
+            }}</base-badge>
+          </td>
           <td>
             <b>{{ record.voucherSeries }}</b>
           </td>
@@ -79,11 +90,12 @@ export default defineComponent({
     ...mapState(usePurchaseRecordStore, [
       'purchaseRecords',
       'totalPages',
-      'isLoadingPurchaseRecords'
+      'isLoadingPurchaseRecords',
+      'isLoadingPurchaseRecordsExportable'
     ])
   },
   methods: {
-    ...mapActions(usePurchaseRecordStore, ['load']),
+    ...mapActions(usePurchaseRecordStore, ['load', 'exportAll']),
     numberFormat(num: number | null): string {
       if (num === null) {
         return '0.00'
