@@ -7,8 +7,10 @@ import { useAuthStore } from '@/auth/stores/auth'
 
 export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
   const purchaseRecords: Ref<PurchaseRecordDTO[]> = ref([])
-  let totalPages: Ref<number> = ref(0)
-  let isLoadingPurchaseRecords: Ref<boolean> = ref(false)
+  const totalPages: Ref<number> = ref(0)
+  const currentPeriod: Ref<{ year: number; month: number } | null> = ref(null)
+  const isLoadingPurchaseRecords: Ref<boolean> = ref(false)
+  const isLoadingPurchaseRecordsExportable: Ref<boolean> = ref(false)
 
   const { token } = useAuthStore()
 
@@ -16,19 +18,41 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
     baseURL: BASE_URL,
     headers: {
       Accept: 'application/json',
-      Authorization: token
-    },
-    transformResponse: (data: string) => JSON.parse(data)
+      Authorization: token,
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+      Expires: '0'
+    }
   })
+
+  function setPeriod(year: number, month: number): void {
+    currentPeriod.value = {
+      year,
+      month
+    }
+  }
 
   async function load(page: number, perPage: number = 15): Promise<void> {
     isLoadingPurchaseRecords.value = true
     try {
+      const params: {
+        page: number
+        paginate: number
+        'period[month]'?: number
+        'period[year]'?: number
+      } = {
+        page: page,
+        paginate: perPage
+      }
+
+      if (currentPeriod.value !== null) {
+        params['period[month]'] = currentPeriod.value.month
+        params['period[year]'] = currentPeriod.value.year
+      }
+
       const { data } = await axios.get(PURCHASE_RECORDS, {
-        params: {
-          page: page,
-          paginate: perPage
-        }
+        params: params,
+        transformResponse: (data: string) => JSON.parse(data)
       })
 
       const responsePurchaseRecords: {
@@ -94,10 +118,41 @@ export const usePurchaseRecordStore = defineStore('purchaseRecord', () => {
     }
   }
 
+  async function exportAll() {
+    isLoadingPurchaseRecordsExportable.value = true
+    try {
+      const params: {
+        'period[month]'?: number
+        'period[year]'?: number
+      } = {}
+
+      if (currentPeriod.value !== null) {
+        params['period[month]'] = currentPeriod.value.month
+        params['period[year]'] = currentPeriod.value.year
+      }
+
+      const data = await axios.get(PURCHASE_RECORDS + '/export', {
+        responseType: 'blob',
+        params: params
+      })
+      const link = document.createElement('a')
+      link.href = window.URL.createObjectURL(data.data)
+      link.download = `registro-compras-${new Date().getTime()}.xls`
+      link.click()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      isLoadingPurchaseRecordsExportable.value = false
+    }
+  }
+
   return {
     load,
+    exportAll,
+    setPeriod,
     purchaseRecords,
     totalPages,
-    isLoadingPurchaseRecords
+    isLoadingPurchaseRecords,
+    isLoadingPurchaseRecordsExportable
   }
 })
