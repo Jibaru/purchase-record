@@ -34,7 +34,7 @@ export default defineComponent({
       const files = this.files
       await this.create(files)
       this.files = []
-      this.load(1, 100)
+      this.load(1)
     }
   }
 })

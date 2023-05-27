@@ -31,7 +31,7 @@
             <base-badge color="success">{{ record.issueDate }}</base-badge>
           </td>
           <td>{{ record.dueDate ?? '-' }}</td>
-          <td>{{ record.voucherType }} <base-badge>({{ record.voucherSeries.includes('F') ? 'FACTURA' : 'REC. POR HONORARIOS' }})</base-badge></td>
+          <td>{{ record.voucherType }} <base-badge>{{ record.voucherSeries.includes('F') || (record.firstIgvAmount ?? 0) > 0 ? 'FACTURA' : 'REC. POR HONORARIOS' }}</base-badge></td>
           <td>
             <b>{{ record.voucherSeries }}</b>
           </td>

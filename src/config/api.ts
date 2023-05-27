@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:8090/api'
-// export const BASE_URL = 'https://api.registro-compras.tech/api'
+// export const BASE_URL = 'http://localhost:8090/api'
+export const BASE_URL = 'https://api.registro-compras.tech/api'
 
 export const VOUCHERS = '/vouchers'
 export const INVOICES = '/invoices'
