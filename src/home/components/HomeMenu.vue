@@ -7,7 +7,7 @@
           <li><font-awesome-icon icon="fa-house" /> Home</li>
         </router-link>
         <router-link to="/users" @click="overlayClicked">
-          <li v-if="canManageUsers()"><font-awesome-icon icon="fa-file-invoice" /> Usuarios</li>
+          <li v-if="canManageUsers()"><font-awesome-icon icon="fa-user" /> Usuarios</li>
         </router-link>
         <router-link to="/vouchers" @click="overlayClicked">
           <li v-if="canManageVouchers()">
@@ -16,18 +16,16 @@
         </router-link>
         <router-link to="/purchase-records" @click="overlayClicked">
           <li v-if="canManagePurchaseRecords()">
-            <font-awesome-icon icon="fa-file-invoice" /> Registro de compras
+            <font-awesome-icon icon="fa-money-bill" /> Registro de compras
           </li>
         </router-link>
         <router-link to="/suppliers" @click="overlayClicked">
           <li v-if="canManageInventory()">
-            <font-awesome-icon icon="fa-file-invoice" /> Proveedores
+            <font-awesome-icon icon="fa-truck-field" /> Proveedores
           </li>
         </router-link>
         <router-link to="/items" @click="overlayClicked">
-          <li v-if="canManageInventory()">
-            <font-awesome-icon icon="fa-file-invoice" /> Artículos
-          </li>
+          <li v-if="canManageInventory()"><font-awesome-icon icon="fa-box" /> Artículos</li>
         </router-link>
       </ul>
     </aside>
