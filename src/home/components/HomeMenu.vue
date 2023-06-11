@@ -4,23 +4,29 @@
       <base-title id="title">Registro de compras</base-title>
       <ul>
         <router-link to="/" @click="overlayClicked">
-          <li>
-              <font-awesome-icon icon="fa-house" /> Home
-          </li>
+          <li><font-awesome-icon icon="fa-house" /> Home</li>
         </router-link>
         <router-link to="/users" @click="overlayClicked">
-          <li v-if="canManageUsers()">
-              <font-awesome-icon icon="fa-file-invoice" /> Usuarios
-          </li>
+          <li v-if="canManageUsers()"><font-awesome-icon icon="fa-file-invoice" /> Usuarios</li>
         </router-link>
         <router-link to="/vouchers" @click="overlayClicked">
           <li v-if="canManageVouchers()">
-              <font-awesome-icon icon="fa-file-invoice" /> Comprobantes
+            <font-awesome-icon icon="fa-file-invoice" /> Comprobantes
           </li>
         </router-link>
         <router-link to="/purchase-records" @click="overlayClicked">
           <li v-if="canManagePurchaseRecords()">
-              <font-awesome-icon icon="fa-file-invoice" /> Registro de compras
+            <font-awesome-icon icon="fa-file-invoice" /> Registro de compras
+          </li>
+        </router-link>
+        <router-link to="/suppliers" @click="overlayClicked">
+          <li v-if="canManageInventory()">
+            <font-awesome-icon icon="fa-file-invoice" /> Proveedores
+          </li>
+        </router-link>
+        <router-link to="/items" @click="overlayClicked">
+          <li v-if="canManageInventory()">
+            <font-awesome-icon icon="fa-file-invoice" /> Artículos
           </li>
         </router-link>
       </ul>
