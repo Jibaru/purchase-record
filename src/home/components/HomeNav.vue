@@ -4,7 +4,9 @@
       <li @click="menuClicked">
         <a href="#"><font-awesome-icon icon="fa-bars" /> Menú</a>
       </li>
-      <li @click="logOut" class="logout">Salir</li>
+      <li @click="logOut" class="logout">
+        Salir <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
+      </li>
     </ul>
   </nav>
 </template>
@@ -29,7 +31,6 @@ export default defineComponent({
 <style lang="css" scoped>
 nav {
   z-index: 1075;
-  max-width: calc(1440px - calc(1.625rem * 2));
   padding: 0.75rem;
   margin: 0.75rem;
   border-radius: 0.375rem;
