@@ -138,6 +138,14 @@ export const useAuthStore = defineStore('auth', () => {
     )
   }
 
+  function canManageBudgetAllocations(): boolean {
+    return (
+      permissions.value.find(
+        (permission: Permission) => permission.name === 'manage-budget-allocations'
+      ) !== undefined
+    )
+  }
+
   return {
     token,
     isLogIn,
@@ -149,6 +157,7 @@ export const useAuthStore = defineStore('auth', () => {
     canManageUsers,
     canManageVouchers,
     canManagePurchaseRecords,
-    canManageInventory
+    canManageInventory,
+    canManageBudgetAllocations
   }
 })

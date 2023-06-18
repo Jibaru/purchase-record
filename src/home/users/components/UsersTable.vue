@@ -8,6 +8,7 @@
         <th>Gestionar Comprobantes</th>
         <th>Gestionar Reg. Compras</th>
         <th>Gestionar Inventario</th>
+        <th>Gestionar Presupuestos</th>
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id">
@@ -43,6 +44,13 @@
               type="checkbox"
               :checked="user.canManageInventory()"
               @change="changePermission($event, user.id, 'manage-inventory')"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              :checked="user.canManageBudgetAllocations()"
+              @change="changePermission($event, user.id, 'manage-budget-allocations')"
             />
           </td>
         </tr>

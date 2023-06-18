@@ -38,4 +38,12 @@ export class User {
       undefined
     )
   }
+
+  public canManageBudgetAllocations(): boolean {
+    return (
+      this.permissions.find(
+        (permission: Permission) => permission.name === 'manage-budget-allocations'
+      ) !== undefined
+    )
+  }
 }
