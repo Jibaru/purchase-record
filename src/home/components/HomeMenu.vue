@@ -27,6 +27,11 @@
         <router-link to="/items" @click="overlayClicked">
           <li v-if="canManageInventory()"><font-awesome-icon icon="fa-box" /> Artículos</li>
         </router-link>
+        <router-link to="/cost-centers" @click="overlayClicked">
+          <li v-if="canManageBudgetAllocations()">
+            <font-awesome-icon icon="fa-box" /> Centro de Costos
+          </li>
+        </router-link>
       </ul>
     </aside>
   </Transition>
@@ -47,7 +52,8 @@ export default defineComponent({
       'canManageUsers',
       'canManageInventory',
       'canManagePurchaseRecords',
-      'canManageVouchers'
+      'canManageVouchers',
+      'canManageBudgetAllocations'
     ]),
     overlayClicked(): void {
       this.$emit('overlay-click')
