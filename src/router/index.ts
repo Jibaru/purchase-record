@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CostCentersView from '../home/cost-centers/views/CostCentersView.vue'
+import CostCenterBudgetsView from '../home/cost-centers/budgets/views/CostCenterBudgetsView.vue'
 import LoginView from '../auth/views/LoginView.vue'
 import HomeView from '../home/views/HomeView.vue'
 import PurchaseRecordsView from '../home/purchase-records/views/PurchaseRecordsView.vue'
@@ -71,6 +72,12 @@ const router = createRouter({
           path: 'cost-centers',
           name: 'costCenters',
           component: CostCentersView
+        },
+        {
+          path: '/cost-centers/:costCenterId/budgets',
+          name: 'costCenterBudgets',
+          component: CostCenterBudgetsView,
+          props: true
         }
       ]
     }
