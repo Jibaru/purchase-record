@@ -8,6 +8,7 @@
       <thead>
         <th>Periodo</th>
         <th>CUO</th>
+        <th>Cod. Asiento Contable</th>
         <th>Fecha Emisión</th>
         <th>Fecha Vencimiento</th>
         <th>Tipo Comp.</th>
@@ -30,6 +31,9 @@
             <base-badge color="primary">{{
               record.uniqueOperationCode.substring(0, 6)
             }}</base-badge>
+          </td>
+          <td>
+            <base-badge color="danger">{{ record.correlativeAccountingEntryNumber }}</base-badge>
           </td>
           <td>
             <base-badge color="success">{{ record.issueDate }}</base-badge>
