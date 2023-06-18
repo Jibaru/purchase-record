@@ -19,7 +19,7 @@
             <base-badge color="success">{{ costCenter.createdAt.toISOString() }}</base-badge>
           </td>
           <td>
-            <base-button type="button">Ver más</base-button>
+            <base-button type="button" @click="toBudgets(costCenter.id)">Ver más</base-button>
           </td>
         </tr>
       </tbody>
@@ -50,6 +50,14 @@ export default defineComponent({
     ...mapActions(useCostCenterStore, ['load']),
     selectPage(page: number): void {
       this.currentPage = page
+    },
+    toBudgets(id: string): void {
+      this.$router.push({
+        name: 'costCenterBudgets',
+        params: {
+          costCenterId: id
+        }
+      })
     }
   },
   watch: {
