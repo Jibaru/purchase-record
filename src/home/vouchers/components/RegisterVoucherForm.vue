@@ -9,6 +9,11 @@
         v-model="files"
         :disabled="isCreatingVouchers"
       />
+      <input type="checkbox" :checked="true" v-model="hasBudget" />
+      <base-label>¿Tienen presupuesto?</base-label>
+      <br />
+      <base-label>Código de Centro de Costos</base-label>
+      <base-input type="text" v-model="costCenterCode" />
       <base-button v-if="!isCreatingVouchers">Registrar</base-button>
       <base-alert v-else>Registrando...</base-alert>
     </form>
@@ -22,7 +27,9 @@ import { useVoucherStore } from '../stores/voucher'
 export default defineComponent({
   data() {
     return {
-      files: [] as File[]
+      files: [] as File[],
+      hasBudget: false as boolean,
+      costCenterCode: '' as string
     }
   },
   computed: {
@@ -32,7 +39,7 @@ export default defineComponent({
     ...mapActions(useVoucherStore, ['create', 'load']),
     async submit(): Promise<void> {
       const files = this.files
-      await this.create(files)
+      await this.create(files, this.hasBudget, this.costCenterCode)
       this.files = []
       this.load(1)
     }

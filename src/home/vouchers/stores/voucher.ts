@@ -84,10 +84,13 @@ export const useVoucherStore = defineStore('voucher', () => {
     }
   }
 
-  async function create(files: File[]) {
+  async function create(files: File[], hasBudget: boolean, costCenterCode: string) {
     isCreatingVouchers.value = true
     try {
       const formData = new FormData()
+      formData.append('has_budget', hasBudget ? '1' : '0')
+      formData.append('cost_center_code', costCenterCode)
+
       for (let i = 0; i < files.length; i++) {
         formData.append(`file[${i}]`, files[i])
       }
